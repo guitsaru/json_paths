@@ -2,6 +2,8 @@ require "json_paths/version"
 require 'json'
 
 class JsonPaths
+  include Enumerable
+
   attr_reader :json
   attr_reader :paths
 
@@ -11,8 +13,8 @@ class JsonPaths
     @paths = json_to_paths
   end
 
-  def keys
-    hash.keys
+  def each
+    paths.each
   end
 
   def json_to_paths

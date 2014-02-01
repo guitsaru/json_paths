@@ -1,6 +1,6 @@
 # JsonPaths
 
-TODO: Write a gem description
+Generate a list of all [JSON paths](http://goessner.net/articles/JsonPath/) in a JSON document.
 
 ## Installation
 
@@ -18,7 +18,12 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+json = '{"a": {"b": [1]}, "c": 2}'
+
+JsonPaths.new(json).map { |path| path }
+#=> ['$.a.b[0]', '$.a.c']
+```
 
 ## Contributing
 
