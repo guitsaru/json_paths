@@ -4,24 +4,22 @@ describe JsonPaths do
   let(:json) do
     <<-EOF
     {
-      "a": {
-        "b": {
-          "c": 1
+      "a": [
+        {
+          "b": 1,
+          "c": 2
         },
-        "d": 2,
-        "e": [
-          {"f": 3},
-          {"g": 4}
-        ]
-      }
+        {
+          "d": 3
+        }
+      ]
     }
     EOF
   end
 
   subject { JsonPaths.new(json) }
 
-  specify { expect(subject.paths).to include("$.a.b.c") }
-  specify { expect(subject.paths).to include("$.a.d") }
-  specify { expect(subject.paths).to include("$.a.e[0].f") }
-  specify { expect(subject.paths).to include("$.a.e[1].g") }
+  specify { expect(subject.paths).to include("$.a[0].b") }
+  specify { expect(subject.paths).to include("$.a[0].c") }
+  specify { expect(subject.paths).to include("$.a[1].d") }
 end

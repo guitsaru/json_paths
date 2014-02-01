@@ -22,10 +22,10 @@ class JsonPaths
     paths = []
 
     parsed_json.each_key do |key|
-      paths << key_to_path(parsed_json, key).map { |k| "$." + k.to_s}
+      paths << key_to_path(parsed_json, key)
     end
 
-    paths.flatten
+    paths.flatten.map { |path| "$." + path }
   end
 
   def key_to_path(hash, key)
@@ -33,9 +33,9 @@ class JsonPaths
     value = hash[key]
 
     if value.respond_to?(:keys)
-      value.each_key do |k|
-        paths_for_key += key_to_path(value, k).map { |ktp| key + "." + ktp }
-      end
+      paths_for_key << value.each_key do |k|
+        key_to_path(value, k).map { |ktp| key + "." + ktp }
+      end.flatten
     elsif value.respond_to?(:each_with_index)
       value.each_with_index do |v,i|
         paths_for_key << JsonPaths.new(v.to_json).paths.map do |j|
@@ -43,9 +43,9 @@ class JsonPaths
         end
       end
     else
-      paths_for_key = [key.to_s]
+      paths_for_key << key.to_s
     end
 
-    Array(paths_for_key.map { |p| Array(p).join('.') })
+    paths_for_key
   end
 end
