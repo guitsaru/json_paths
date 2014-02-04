@@ -10,7 +10,10 @@ describe JsonPaths do
           "c": 2
         },
         {
-          "d": 3
+          "d": 3,
+          "e": {
+            "f": "g"
+          }
         }
       ]
     }
@@ -22,4 +25,5 @@ describe JsonPaths do
   specify { expect(subject.paths).to include("$.a[0].b") }
   specify { expect(subject.paths).to include("$.a[0].c") }
   specify { expect(subject.paths).to include("$.a[1].d") }
+  specify { expect(subject.paths).to include("$.a[1].e.f") }
 end
