@@ -34,7 +34,10 @@ class JsonPaths
 
     if value.respond_to?(:keys)
       value.each_key do |k|
-        paths_for_key << key_to_path(value, k).map { |ktp| key + "." + ktp }
+        paths_for_key << key_to_path(value, k).map do |ktp|
+          ktp = ktp.first unless ktp.is_a?(String)
+          key + "." + ktp
+        end
       end
     elsif value.respond_to?(:each_with_index)
       value.each_with_index do |v,i|
